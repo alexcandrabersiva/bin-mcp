@@ -2,6 +2,30 @@
 
 A Model Context Protocol (MCP) server that provides comprehensive access to Binance Futures API endpoints. This server implements all major trading, account management, and market data functionality as documented in the Binance Futures API.
 
+## Quick Start
+
+1. **Install the package:**
+   ```bash
+   pip install binance-futures-mcp
+   ```
+
+2. **Run the server:**
+   ```bash
+   uvx binance-futures-mcp --binance-api-key "your_key" --binance-secret-key "your_secret"
+   ```
+
+3. **Or configure in VS Code** by adding to your `settings.json`:
+   ```json
+   {
+     "mcp.servers": {
+       "binance": {
+         "command": "uvx",
+         "args": ["binance-futures-mcp", "--binance-api-key", "your_key", "--binance-secret-key", "your_secret"]
+       }
+     }
+   }
+   ```
+
 ## Features
 
 ### Account Information Tools
@@ -35,24 +59,114 @@ A Model Context Protocol (MCP) server that provides comprehensive access to Bina
 
 ## Installation
 
-### Prerequisites
-- Python 3.8 or higher
-- Binance Futures API credentials
-
-### Install Dependencies
-
 ```bash
-cd binance-mcp-server
-pip install -e .
+pip install binance-futures-mcp
 ```
 
-Or install development dependencies:
+### Development Installation
+
+For development, you can install from source:
 
 ```bash
+git clone https://github.com/bin-mcp/binance-mcp-server.git
+cd binance-mcp-server
 pip install -e ".[dev]"
 ```
 
+## MCP Client Configuration
+
+This server can be integrated with various MCP clients. Here are configuration examples for popular clients:
+
+### VS Code
+
+Add to your VS Code `settings.json`:
+
+```json
+{
+  "mcp.servers": {
+    "binance": {
+      "command": "uvx",
+      "args": ["binance-futures-mcp", "--binance-api-key", "your_api_key", "--binance-secret-key", "your_secret_key"],
+      "env": {}
+    }
+  }
+}
+```
+
+### Cursor
+
+Add to your Cursor configuration file (`.cursor/mcp.json`):
+
+```json
+{
+  "servers": {
+    "binance": {
+      "command": "uvx", 
+      "args": ["binance-futures-mcp", "--binance-api-key", "your_api_key", "--binance-secret-key", "your_secret_key"],
+      "env": {}
+    }
+  }
+}
+```
+
+### Windsurf
+
+Add to your Windsurf configuration (`.windsurf/mcp.json`):
+
+```json
+{
+  "mcpServers": {
+    "binance": {
+      "command": "uvx",
+      "args": ["binance-futures-mcp", "--binance-api-key", "your_api_key", "--binance-secret-key", "your_secret_key"],
+      "env": {}
+    }
+  }
+}
+```
+
+### Claude Desktop
+
+Add to your Claude Desktop configuration file:
+
+**On macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+**On Windows**: `%APPDATA%/Claude/claude_desktop_config.json`
+
+```json
+{
+  "mcpServers": {
+    "binance": {
+      "command": "uvx",
+      "args": ["binance-futures-mcp", "--binance-api-key", "your_api_key", "--binance-secret-key", "your_secret_key"],
+      "env": {}
+    }
+  }
+}
+```
+
+### Configuration Notes
+
+1. **No path needed**: With PyPI installation, you don't need to specify paths or working directories.
+
+2. **Set API credentials**: Replace `your_api_key` and `your_secret_key` with your actual Binance API credentials.
+
+3. **Alternative commands**: You can also use:
+   - `pip install binance-futures-mcp && python -m binance_mcp`
+   - `binance-mcp-server` (if installed globally and on PATH)
+
+4. **Python environment**: Using `uvx` automatically handles the Python environment.
+
+5. **Security**: For production use, consider storing credentials in your system's environment variables instead of directly in configuration files.
+
 ## Configuration
+
+### API Requirements
+
+Your Binance API key needs the following permissions:
+- **Futures Trading**: For order placement and management
+- **Futures Reading**: For account and market data access
+
+**Note**: Market data endpoints (exchange info, prices, order books, etc.) work without authentication.
 
 ### Environment Variables
 
@@ -63,24 +177,19 @@ export BINANCE_API_KEY="your_api_key_here"
 export BINANCE_SECRET_KEY="your_secret_key_here"
 ```
 
-### API Permissions
-
-Your Binance API key needs the following permissions:
-- **Futures Trading**: For order placement and management
-- **Futures Reading**: For account and market data access
-
-**Note**: Market data endpoints (exchange info, prices, order books, etc.) work without authentication.
-
 ## Usage
 
 ### Running the Server
 
 ```bash
-# Run directly
+# Run directly (after installing from PyPI)
 python -m binance_mcp
 
-# Or using the installed script
-binance-mcp-server
+# Or using uvx (no installation needed)
+uvx binance-futures-mcp
+
+# With API credentials as arguments
+uvx binance-futures-mcp --binance-api-key "your_key" --binance-secret-key "your_secret"
 ```
 
 ### Available Tools
