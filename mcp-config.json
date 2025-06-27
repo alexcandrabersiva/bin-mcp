@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "binance-futures-mcp": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "/root/binance-mcp-server",
+        "run",
+        "binance.py",
+        "--binance-api-key",
+        "YOUR_API_KEY",
+        "--binance-secret-key",
+        "YOUR_SECRET_KEY"
+      ]
+    }
+  }
+}
