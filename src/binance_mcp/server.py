@@ -27,14 +27,31 @@ class BinanceConfig:
 
 
 class BinanceClient:
-    """Binance Futures API client"""
+    """Binance Futures API client with improved connectivity"""
     
     def __init__(self, config: BinanceConfig):
         self.config = config
         self.session: Optional[aiohttp.ClientSession] = None
     
     async def __aenter__(self):
-        self.session = aiohttp.ClientSession()
+        # Create session with better connectivity settings
+        timeout = aiohttp.ClientTimeout(total=30, connect=10)
+        connector = aiohttp.TCPConnector(
+            ttl_dns_cache=300,
+            use_dns_cache=True,
+            limit=100,
+            limit_per_host=10,
+            enable_cleanup_closed=True
+        )
+        
+        self.session = aiohttp.ClientSession(
+            timeout=timeout,
+            connector=connector,
+            headers={
+                'User-Agent': 'binance-mcp-server/1.0.6',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        )
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
@@ -78,17 +95,24 @@ class BinanceClient:
         
         try:
             if method == "GET":
-                async with self.session.get(url, params=params, headers=headers) as response:
+                async with self.session.get(url, params=params, headers=headers, ssl=False) as response:
+                    response.raise_for_status()
                     return await response.json()
             elif method == "POST":
-                async with self.session.post(url, data=params, headers=headers) as response:
+                async with self.session.post(url, data=params, headers=headers, ssl=False) as response:
+                    response.raise_for_status()
                     return await response.json()
             elif method == "DELETE":
-                async with self.session.delete(url, data=params, headers=headers) as response:
+                async with self.session.delete(url, data=params, headers=headers, ssl=False) as response:
+                    response.raise_for_status()
                     return await response.json()
             else:
                 raise ValueError(f"Unsupported HTTP method: {method}")
                 
+        except aiohttp.ClientError as e:
+            raise Exception(f"Network error connecting to Binance API: {str(e)}")
+        except asyncio.TimeoutError:
+            raise Exception("Request timeout - please check your internet connection")
         except Exception as e:
             raise Exception(f"Request failed: {str(e)}")
 
@@ -248,7 +272,11 @@ class BinanceMCPServer:
                     inputSchema={
                         "type": "object",
                         "properties": {
-                            "orders": {"type": "array", "description": "List of order parameters"},
+                            "orders": {
+                                "type": "array", 
+                                "description": "List of order parameters",
+                                "items": {"type": "object"}
+                            },
                             "quantity_precision": {"type": "integer", "description": "Quantity precision for validation"},
                             "price_precision": {"type": "integer", "description": "Price precision for validation"}
                         },
@@ -274,7 +302,11 @@ class BinanceMCPServer:
                         "type": "object",
                         "properties": {
                             "symbol": {"type": "string", "description": "Trading pair symbol"},
-                            "order_id_list": {"type": "array", "description": "List of order IDs to cancel (up to 10 orders per batch)"}
+                            "order_id_list": {
+                                "type": "array", 
+                                "description": "List of order IDs to cancel (up to 10 orders per batch)",
+                                "items": {"type": "integer"}
+                            }
                         },
                         "required": ["symbol", "order_id_list"]
                     }
@@ -441,6 +473,17 @@ class BinanceMCPServer:
                     }
                 ),
                 Tool(
+                    name="get_24hr_ticker",
+                    description="Get 24hr ticker price change statistics",
+                    inputSchema={
+                        "type": "object",
+                        "properties": {
+                            "symbol": {"type": "string", "description": "Trading pair symbol (optional, if not provided returns all symbols)"}
+                        },
+                        "required": []
+                    }
+                ),
+                Tool(
                     name="get_order_book",
                     description="Get order book for a symbol",
                     inputSchema={
@@ -507,6 +550,21 @@ class BinanceMCPServer:
                         "required": []
                     }
                 ),
+                Tool(
+                    name="get_taker_buy_sell_volume",
+                    description="Get taker buy/sell volume ratio statistics",
+                    inputSchema={
+                        "type": "object",
+                        "properties": {
+                            "symbol": {"type": "string", "description": "Trading pair symbol"},
+                            "period": {"type": "string", "description": "Period for the data (5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d)"},
+                            "start_time": {"type": "integer", "description": "Start timestamp in ms"},
+                            "end_time": {"type": "integer", "description": "End timestamp in ms"},
+                            "limit": {"type": "integer", "description": "Number of entries (max 500, default 30)"}
+                        },
+                        "required": ["symbol", "period"]
+                    }
+                ),
 
                 # Trading History Tools
                 Tool(
@@ -547,9 +605,9 @@ class BinanceMCPServer:
             
             # Check if API credentials are configured for authenticated endpoints
             unauthenticated_tools = [
-                "get_exchange_info", "get_price_ticker", "get_book_ticker", 
+                "get_exchange_info", "get_price_ticker", "get_24hr_ticker", "get_book_ticker", 
                 "get_order_book", "get_klines", "get_mark_price", 
-                "get_aggregate_trades", "get_funding_rate_history"
+                "get_aggregate_trades", "get_funding_rate_history", "get_taker_buy_sell_volume"
             ]
             
             if not self.config.api_key or not self.config.secret_key:
@@ -681,6 +739,11 @@ class BinanceMCPServer:
                         if "symbol" in arguments:
                             params["symbol"] = arguments["symbol"]
                         result = await client._make_request("GET", "/fapi/v1/ticker/price", params)
+                    elif name == "get_24hr_ticker":
+                        params = {}
+                        if "symbol" in arguments:
+                            params["symbol"] = arguments["symbol"]
+                        result = await client._make_request("GET", "/fapi/v1/ticker/24hr", params)
                     elif name == "get_order_book":
                         params = {
                             "symbol": arguments["symbol"],
@@ -701,6 +764,9 @@ class BinanceMCPServer:
                     elif name == "get_funding_rate_history":
                         params = {k: v for k, v in arguments.items() if v is not None}
                         result = await client._make_request("GET", "/fapi/v1/fundingRate", params)
+                    elif name == "get_taker_buy_sell_volume":
+                        params = {k: v for k, v in arguments.items() if v is not None}
+                        result = await client._make_request("GET", "/futures/data/takerlongshortRatio", params)
                     
                     # Trading History Tools
                     elif name == "get_account_trades":
@@ -750,8 +816,10 @@ async def main():
             write_stream, 
             InitializationOptions(
                 server_name="binance-futures-mcp-server",
-                server_version="1.0.0",
-                capabilities={}
+                server_version="1.0.6",
+                capabilities={
+                    "tools": {}
+                }
             )
         )
 

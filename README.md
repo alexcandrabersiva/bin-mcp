@@ -17,10 +17,12 @@ A Model Context Protocol (MCP) server that provides comprehensive access to Bina
 3. **Or configure in VS Code** by adding to your `settings.json`:
    ```json
    {
-     "mcp.servers": {
-       "binance": {
-         "command": "uvx",
-         "args": ["binance-futures-mcp", "--binance-api-key", "your_key", "--binance-secret-key", "your_secret"]
+     "mcp": {
+       "servers": {
+         "binance": {
+           "command": "uvx",
+           "args": ["--from", "binance-futures-mcp", "binance-mcp-server.exe", "--binance-api-key", "your_key", "--binance-secret-key", "your_secret"]
+         }
        }
      }
    }
@@ -83,11 +85,12 @@ Add to your VS Code `settings.json`:
 
 ```json
 {
-  "mcp.servers": {
-    "binance": {
-      "command": "uvx",
-      "args": ["binance-futures-mcp", "--binance-api-key", "your_api_key", "--binance-secret-key", "your_secret_key"],
-      "env": {}
+  "mcp": {
+    "servers": {
+      "binance": {
+        "command": "uvx",
+        "args": ["--from", "binance-futures-mcp", "binance-mcp-server.exe", "--binance-api-key", "your_api_key", "--binance-secret-key", "your_secret_key"]
+      }
     }
   }
 }
@@ -102,8 +105,7 @@ Add to your Cursor configuration file (`.cursor/mcp.json`):
   "servers": {
     "binance": {
       "command": "uvx", 
-      "args": ["binance-futures-mcp", "--binance-api-key", "your_api_key", "--binance-secret-key", "your_secret_key"],
-      "env": {}
+      "args": ["--from", "binance-futures-mcp", "binance-mcp-server.exe", "--binance-api-key", "your_api_key", "--binance-secret-key", "your_secret_key"]
     }
   }
 }
@@ -118,8 +120,7 @@ Add to your Windsurf configuration (`.windsurf/mcp.json`):
   "mcpServers": {
     "binance": {
       "command": "uvx",
-      "args": ["binance-futures-mcp", "--binance-api-key", "your_api_key", "--binance-secret-key", "your_secret_key"],
-      "env": {}
+      "args": ["--from", "binance-futures-mcp", "binance-mcp-server.exe", "--binance-api-key", "your_api_key", "--binance-secret-key", "your_secret_key"]
     }
   }
 }
@@ -137,8 +138,7 @@ Add to your Claude Desktop configuration file:
   "mcpServers": {
     "binance": {
       "command": "uvx",
-      "args": ["binance-futures-mcp", "--binance-api-key", "your_api_key", "--binance-secret-key", "your_secret_key"],
-      "env": {}
+      "args": ["--from", "binance-futures-mcp", "binance-mcp-server.exe", "--binance-api-key", "your_api_key", "--binance-secret-key", "your_secret_key"]
     }
   }
 }
@@ -150,9 +150,10 @@ Add to your Claude Desktop configuration file:
 
 2. **Set API credentials**: Replace `your_api_key` and `your_secret_key` with your actual Binance API credentials.
 
-3. **Alternative commands**: You can also use:
+2. **Alternative commands**: You can also use:
+   - `uvx binance-futures-mcp` (direct package execution)
+   - `uvx --from binance-futures-mcp binance-mcp-server.exe` (explicit executable)
    - `pip install binance-futures-mcp && python -m binance_mcp`
-   - `binance-mcp-server` (if installed globally and on PATH)
 
 4. **Python environment**: Using `uvx` automatically handles the Python environment.
 
@@ -194,7 +195,7 @@ uvx binance-futures-mcp --binance-api-key "your_key" --binance-secret-key "your_
 
 ### Available Tools
 
-The server provides 32 tools organized into categories:
+The server provides 35 tools organized into categories:
 
 #### Account Information (5 tools)
 - `get_account_info` - Get futures account information
@@ -227,10 +228,12 @@ The server provides 32 tools organized into categories:
 - `change_position_mode` - Change position mode
 - `modify_position_margin` - Modify position margin
 
-#### Market Data (6 tools)
+#### Market Data (10 tools)
 - `get_exchange_info` - Get trading rules and symbol info
 - `get_book_ticker` - Get best bid/ask prices
 - `get_price_ticker` - Get latest prices
+- `get_24hr_ticker` - Get 24hr price change statistics
+- `get_taker_buy_sell_volume` - Get taker buy/sell volume ratio
 - `get_order_book` - Get order book depth
 - `get_klines` - Get candlestick data
 - `get_mark_price` - Get mark price and funding rate
@@ -291,6 +294,28 @@ The server provides 32 tools organized into categories:
     "symbol": "BTCUSDT",
     "interval": "1h",
     "limit": 100
+  }
+}
+```
+
+### Get 24hr Price Statistics
+
+```json
+{
+  "tool": "get_24hr_ticker",
+  "arguments": {
+    "symbol": "BTCUSDT"
+  }
+}
+```
+
+### Get Taker Buy/Sell Volume Ratio
+
+```json
+{
+  "tool": "get_taker_buy_sell_volume",
+  "arguments": {
+    "symbol": "BTCUSDT"
   }
 }
 ```
