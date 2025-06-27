@@ -48,7 +48,7 @@ class BinanceClient:
             timeout=timeout,
             connector=connector,
             headers={
-                'User-Agent': 'binance-mcp-server/1.0.6',
+                'User-Agent': 'binance-mcp-server/1.0.7',
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         )
@@ -816,7 +816,7 @@ async def main():
             write_stream, 
             InitializationOptions(
                 server_name="binance-futures-mcp-server",
-                server_version="1.0.6",
+                server_version="1.0.7",
                 capabilities={
                     "tools": {}
                 }

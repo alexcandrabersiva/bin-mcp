@@ -6,12 +6,12 @@ A Model Context Protocol (MCP) server that provides comprehensive access to Bina
 
 1. **Install the package:**
    ```bash
-   pip install binance-futures-mcp
+   pip install binance_futures_mcp
    ```
 
 2. **Run the server:**
    ```bash
-   uvx binance-futures-mcp --binance-api-key "your_key" --binance-secret-key "your_secret"
+   uvx binance_futures_mcp --binance-api-key "your_key" --binance-secret-key "your_secret"
    ```
 
 3. **Or configure in VS Code** by adding to your `settings.json`:
@@ -21,7 +21,7 @@ A Model Context Protocol (MCP) server that provides comprehensive access to Bina
        "servers": {
          "binance": {
            "command": "uvx",
-           "args": ["--from", "binance-futures-mcp", "binance-mcp-server.exe", "--binance-api-key", "your_key", "--binance-secret-key", "your_secret"]
+           "args": ["--from", "binance_futures_mcp", "binance-mcp-server.exe", "--binance-api-key", "your_key", "--binance-secret-key", "your_secret"]
          }
        }
      }
@@ -62,7 +62,7 @@ A Model Context Protocol (MCP) server that provides comprehensive access to Bina
 ## Installation
 
 ```bash
-pip install binance-futures-mcp
+pip install binance_futures_mcp
 ```
 
 ### Development Installation
@@ -89,7 +89,7 @@ Add to your VS Code `settings.json`:
     "servers": {
       "binance": {
         "command": "uvx",
-        "args": ["--from", "binance-futures-mcp", "binance-mcp-server.exe", "--binance-api-key", "your_api_key", "--binance-secret-key", "your_secret_key"]
+        "args": ["--from", "binance_futures_mcp", "binance-mcp-server.exe", "--binance-api-key", "your_api_key", "--binance-secret-key", "your_secret_key"]
       }
     }
   }
@@ -105,7 +105,7 @@ Add to your Cursor configuration file (`.cursor/mcp.json`):
   "servers": {
     "binance": {
       "command": "uvx", 
-      "args": ["--from", "binance-futures-mcp", "binance-mcp-server.exe", "--binance-api-key", "your_api_key", "--binance-secret-key", "your_secret_key"]
+      "args": ["--from", "binance_futures_mcp", "binance-mcp-server.exe", "--binance-api-key", "your_api_key", "--binance-secret-key", "your_secret_key"]
     }
   }
 }
@@ -120,7 +120,7 @@ Add to your Windsurf configuration (`.windsurf/mcp.json`):
   "mcpServers": {
     "binance": {
       "command": "uvx",
-      "args": ["--from", "binance-futures-mcp", "binance-mcp-server.exe", "--binance-api-key", "your_api_key", "--binance-secret-key", "your_secret_key"]
+      "args": ["--from", "binance_futures_mcp", "binance-mcp-server.exe", "--binance-api-key", "your_api_key", "--binance-secret-key", "your_secret_key"]
     }
   }
 }
@@ -138,7 +138,7 @@ Add to your Claude Desktop configuration file:
   "mcpServers": {
     "binance": {
       "command": "uvx",
-      "args": ["--from", "binance-futures-mcp", "binance-mcp-server.exe", "--binance-api-key", "your_api_key", "--binance-secret-key", "your_secret_key"]
+      "args": ["--from", "binance_futures_mcp", "binance-mcp-server.exe", "--binance-api-key", "your_api_key", "--binance-secret-key", "your_secret_key"]
     }
   }
 }
@@ -151,9 +151,9 @@ Add to your Claude Desktop configuration file:
 2. **Set API credentials**: Replace `your_api_key` and `your_secret_key` with your actual Binance API credentials.
 
 2. **Alternative commands**: You can also use:
-   - `uvx binance-futures-mcp` (direct package execution)
-   - `uvx --from binance-futures-mcp binance-mcp-server.exe` (explicit executable)
-   - `pip install binance-futures-mcp && python -m binance_mcp`
+   - `uvx binance_futures_mcp` (direct package execution)
+   - `uvx --from binance_futures_mcp binance-mcp-server.exe` (explicit executable)
+   - `pip install binance_futures_mcp && python -m binance_mcp`
 
 4. **Python environment**: Using `uvx` automatically handles the Python environment.
 
@@ -187,10 +187,10 @@ export BINANCE_SECRET_KEY="your_secret_key_here"
 python -m binance_mcp
 
 # Or using uvx (no installation needed)
-uvx binance-futures-mcp
+uvx binance_futures_mcp
 
 # With API credentials as arguments
-uvx binance-futures-mcp --binance-api-key "your_key" --binance-secret-key "your_secret"
+uvx binance_futures_mcp --binance-api-key "your_key" --binance-secret-key "your_secret"
 ```
 
 ### Available Tools
@@ -238,11 +238,11 @@ The server provides 35 tools organized into categories:
 - `get_klines` - Get candlestick data
 - `get_mark_price` - Get mark price and funding rate
 - `get_aggregate_trades` - Get aggregate trade data
+- `get_funding_rate_history` - Get funding rate history
 
-#### Trading History (3 tools)
+#### Trading History (2 tools)
 - `get_account_trades` - Get account trade history
 - `get_income_history` - Get income history
-- `get_funding_rate_history` - Get funding rate history
 
 ## Example Usage
 

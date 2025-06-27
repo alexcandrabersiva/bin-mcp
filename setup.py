@@ -6,8 +6,8 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
-    name="binance-futures-mcp",
-    version="1.0.6",
+    name="binance_futures_mcp",
+    version="1.0.7",
     author="Binance MCP Server",
     description="A Model Context Protocol server for Binance Futures API",
     long_description=long_description,
