@@ -17,10 +17,12 @@ A Model Context Protocol (MCP) server that provides comprehensive access to Bina
 3. **Or configure in VS Code** by adding to your `settings.json`:
    ```json
    {
-     "mcp.servers": {
-       "binance": {
-         "command": "uvx",
-         "args": ["binance-futures-mcp", "--binance-api-key", "your_key", "--binance-secret-key", "your_secret"]
+     "mcp": {
+       "servers": {
+         "binance": {
+           "command": "uvx",
+           "args": ["--from", "binance-futures-mcp", "binance-mcp-server.exe", "--binance-api-key", "your_key", "--binance-secret-key", "your_secret"]
+         }
        }
      }
    }
@@ -83,11 +85,12 @@ Add to your VS Code `settings.json`:
 
 ```json
 {
-  "mcp.servers": {
-    "binance": {
-      "command": "uvx",
-      "args": ["binance-futures-mcp", "--binance-api-key", "your_api_key", "--binance-secret-key", "your_secret_key"],
-      "env": {}
+  "mcp": {
+    "servers": {
+      "binance": {
+        "command": "uvx",
+        "args": ["--from", "binance-futures-mcp", "binance-mcp-server.exe", "--binance-api-key", "your_api_key", "--binance-secret-key", "your_secret_key"]
+      }
     }
   }
 }
@@ -102,8 +105,7 @@ Add to your Cursor configuration file (`.cursor/mcp.json`):
   "servers": {
     "binance": {
       "command": "uvx", 
-      "args": ["binance-futures-mcp", "--binance-api-key", "your_api_key", "--binance-secret-key", "your_secret_key"],
-      "env": {}
+      "args": ["--from", "binance-futures-mcp", "binance-mcp-server.exe", "--binance-api-key", "your_api_key", "--binance-secret-key", "your_secret_key"]
     }
   }
 }
@@ -118,8 +120,7 @@ Add to your Windsurf configuration (`.windsurf/mcp.json`):
   "mcpServers": {
     "binance": {
       "command": "uvx",
-      "args": ["binance-futures-mcp", "--binance-api-key", "your_api_key", "--binance-secret-key", "your_secret_key"],
-      "env": {}
+      "args": ["--from", "binance-futures-mcp", "binance-mcp-server.exe", "--binance-api-key", "your_api_key", "--binance-secret-key", "your_secret_key"]
     }
   }
 }
@@ -137,8 +138,7 @@ Add to your Claude Desktop configuration file:
   "mcpServers": {
     "binance": {
       "command": "uvx",
-      "args": ["binance-futures-mcp", "--binance-api-key", "your_api_key", "--binance-secret-key", "your_secret_key"],
-      "env": {}
+      "args": ["--from", "binance-futures-mcp", "binance-mcp-server.exe", "--binance-api-key", "your_api_key", "--binance-secret-key", "your_secret_key"]
     }
   }
 }
@@ -150,9 +150,10 @@ Add to your Claude Desktop configuration file:
 
 2. **Set API credentials**: Replace `your_api_key` and `your_secret_key` with your actual Binance API credentials.
 
-3. **Alternative commands**: You can also use:
+2. **Alternative commands**: You can also use:
+   - `uvx binance-futures-mcp` (direct package execution)
+   - `uvx --from binance-futures-mcp binance-mcp-server.exe` (explicit executable)
    - `pip install binance-futures-mcp && python -m binance_mcp`
-   - `binance-mcp-server` (if installed globally and on PATH)
 
 4. **Python environment**: Using `uvx` automatically handles the Python environment.
 
