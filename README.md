@@ -52,8 +52,52 @@ A Model Context Protocol (MCP) server that provides comprehensive access to Bina
 
 ## 📦 Installation
 
+### Option 1: PyPI Installation (Recommended)
+
+Install the package from PyPI:
+
 ```bash
 pip install binance_futures_mcp
+```
+
+### Option 2: Docker Deployment
+
+For containerized deployment:
+
+```bash
+# Clone the repository
+git clone https://github.com/alexcandrabersiva/bin-mcp.git
+cd binance-mcp-server
+
+# Build the Docker image
+docker build -t binance-mcp-server .
+
+# Run with environment variables
+docker run -e BINANCE_API_KEY="your_api_key" -e BINANCE_SECRET_KEY="your_secret_key" \
+  binance-mcp-server --binance-api-key "$BINANCE_API_KEY" --binance-secret-key "$BINANCE_SECRET_KEY"
+```
+
+#### Docker Compose (Optional)
+
+Create a `docker-compose.yml`:
+
+```yaml
+version: '3.8'
+services:
+  binance-mcp:
+    build: .
+    environment:
+      - BINANCE_API_KEY=${BINANCE_API_KEY}
+      - BINANCE_SECRET_KEY=${BINANCE_SECRET_KEY}
+    command: [
+      "--binance-api-key", "${BINANCE_API_KEY}",
+      "--binance-secret-key", "${BINANCE_SECRET_KEY}"
+    ]
+```
+
+Then run:
+```bash
+docker-compose up
 ```
 
 ### Development Installation
