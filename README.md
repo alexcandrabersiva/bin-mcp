@@ -2,7 +2,30 @@
 
 A Model Context Protocol (MCP) server that provides comprehensive access to Binance Futures API endpoints. This server implements all major trading, account management, and market data functionality as documented in the Binance Futures API.
 
-## Quick Start
+## 📋 Table of Contents
+
+- [🚀 Quick Start](#-quick-start)
+- [✨ Features](#-features)
+- [📦 Installation](#-installation)
+- [⚙️ Configuration](#️-configuration)
+  - [API Requirements](#api-requirements)
+  - [MCP Client Setup](#mcp-client-setup)
+- [🛠️ Available Tools](#️-available-tools)
+  - [Account & Position Management](#account--position-management)
+  - [Order Management](#order-management)
+  - [Market Data](#market-data)
+  - [Trading History](#trading-history)
+- [💡 Example Usage](#-example-usage)
+- [🔒 Security](#-security)
+- [📚 API Reference](#-api-reference)
+- [🔧 Development](#-development)
+- [❗ Error Codes](#-error-codes)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
+- [⚠️ Disclaimer](#️-disclaimer)
+- [💬 Support](#-support)
+
+## 🚀 Quick Start
 
 1. **Install the package:**
    ```bash
@@ -14,52 +37,20 @@ A Model Context Protocol (MCP) server that provides comprehensive access to Bina
    uvx binance_futures_mcp --binance-api-key "your_key" --binance-secret-key "your_secret"
    ```
 
-3. **Or configure in VS Code** by adding to your `settings.json`:
-   ```json
-   {
-     "mcp": {
-       "servers": {
-         "binance": {
-           "command": "uvx",
-           "args": ["--from", "binance_futures_mcp", "binance-mcp-server.exe", "--binance-api-key", "your_key", "--binance-secret-key", "your_secret"]
-         }
-       }
-     }
-   }
-   ```
+3. **Configure in your MCP client** (see [Configuration](#️-configuration) section for detailed setup)
 
-## Features
+## ✨ Features
 
-### Account Information Tools
-- Get account info, balance, and position information
-- Query position mode and commission rates
-- Access risk management data (ADL quantile, leverage brackets, force orders)
+* **41 comprehensive trading tools** across 5 categories
+* **Smart ticker data caching** with 5-minute refresh cycle
+* **Proper authentication handling** (rejects unauthenticated requests)
+* **Active symbol filtering** (excludes delisted tokens)
+* **Error handling and graceful degradation**
+* **Real-time market data access**
+* **Complete order management suite**
+* **Risk management tools**
 
-### Order Management Tools
-- Place orders (MARKET, LIMIT, STOP, STOP_MARKET, TRAILING_STOP_MARKET)
-- Place multiple orders in batch
-- Cancel orders (single, multiple, or all)
-- Query order status and history
-- Auto-cancel functionality
-
-### Trading Configuration Tools
-- Change leverage and margin type
-- Switch between hedge and one-way position modes
-- Modify position margins
-
-### Market Data Tools
-- Get exchange information and trading rules
-- Access real-time price data and order books
-- Retrieve candlestick/kline data
-- Get mark prices and funding rates
-- Access aggregate trade data
-
-### Trading History Tools
-- Get account trade history
-- Access income history (funding fees, PnL, etc.)
-- Retrieve funding rate history
-
-## Installation
+## 📦 Installation
 
 ```bash
 pip install binance_futures_mcp
@@ -75,11 +66,19 @@ cd binance-mcp-server
 pip install -e ".[dev]"
 ```
 
-## MCP Client Configuration
+## ⚙️ Configuration
 
-This server can be integrated with various MCP clients. Here are configuration examples for popular clients:
+### API Requirements
 
-### VS Code
+Your Binance API key needs the following permissions:
+- **Futures Trading**: For order placement and management
+- **Futures Reading**: For account and market data access
+
+### MCP Client Setup
+
+This server can be integrated with various MCP clients. Here are configuration examples:
+
+#### VS Code
 
 Add to your VS Code `settings.json`:
 
@@ -96,7 +95,7 @@ Add to your VS Code `settings.json`:
 }
 ```
 
-### Cursor
+#### Cursor
 
 Add to your Cursor configuration file (`.cursor/mcp.json`):
 
@@ -111,7 +110,7 @@ Add to your Cursor configuration file (`.cursor/mcp.json`):
 }
 ```
 
-### Windsurf
+#### Windsurf
 
 Add to your Windsurf configuration (`.windsurf/mcp.json`):
 
@@ -126,11 +125,11 @@ Add to your Windsurf configuration (`.windsurf/mcp.json`):
 }
 ```
 
-### Claude Desktop
+#### Claude Desktop
 
 Add to your Claude Desktop configuration file:
 
-**On macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+**On macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`  
 **On Windows**: `%APPDATA%/Claude/claude_desktop_config.json`
 
 ```json
@@ -146,105 +145,76 @@ Add to your Claude Desktop configuration file:
 
 ### Configuration Notes
 
-1. **No path needed**: With PyPI installation, you don't need to specify paths or working directories.
+1. **No path needed**: With PyPI installation, you don't need to specify paths or working directories
+2. **Set API credentials**: Replace `your_api_key` and `your_secret_key` with your actual Binance API credentials
+3. **Alternative commands**: You can also use `uvx binance_futures_mcp` or `python -m binance_mcp`
+4. **Security**: For production use, consider storing credentials in environment variables
 
-2. **Set API credentials**: Replace `your_api_key` and `your_secret_key` with your actual Binance API credentials.
+## 🛠️ Available Tools
 
-2. **Alternative commands**: You can also use:
-   - `uvx binance_futures_mcp` (direct package execution)
-   - `uvx --from binance_futures_mcp binance-mcp-server.exe` (explicit executable)
-   - `pip install binance_futures_mcp && python -m binance_mcp`
+The server provides **41 comprehensive tools** organized into the following categories:
 
-4. **Python environment**: Using `uvx` automatically handles the Python environment.
+### Account & Position Management
+*(14 tools)*
 
-5. **Security**: For production use, consider storing credentials in your system's environment variables instead of directly in configuration files.
-
-## Configuration
-
-### API Requirements
-
-Your Binance API key needs the following permissions:
-- **Futures Trading**: For order placement and management
-- **Futures Reading**: For account and market data access
-
-**Note**: Market data endpoints (exchange info, prices, order books, etc.) work without authentication.
-
-### Environment Variables
-
-Set your Binance API credentials as environment variables:
-
-```bash
-export BINANCE_API_KEY="your_api_key_here"
-export BINANCE_SECRET_KEY="your_secret_key_here"
-```
-
-## Usage
-
-### Running the Server
-
-```bash
-# Run directly (after installing from PyPI)
-python -m binance_mcp
-
-# Or using uvx (no installation needed)
-uvx binance_futures_mcp
-
-# With API credentials as arguments
-uvx binance_futures_mcp --binance-api-key "your_key" --binance-secret-key "your_secret"
-```
-
-### Available Tools
-
-The server provides 35 tools organized into categories:
-
-#### Account Information (5 tools)
-- `get_account_info` - Get futures account information
-- `get_balance` - Get account balance for all assets
-- `get_position_info` - Get current position information
-- `get_position_mode` - Get position mode (Hedge/One-way)
-- `get_commission_rate` - Get commission rate for a symbol
-
-#### Risk Management (4 tools)
+- `get_account_info` - Get account information
+- `get_balance` - Get account balance
+- `get_positions` - Get position information
+- `get_position_mode` - Get position mode (hedge/one-way)
+- `change_position_mode` - Switch between hedge and one-way modes
+- `get_commission_rate` - Get commission rates
+- `change_leverage` - Change leverage for a symbol
+- `change_margin_type` - Change margin type (isolated/cross)
+- `modify_position_margin` - Modify position margin
 - `get_adl_quantile` - Get ADL quantile estimation
 - `get_leverage_brackets` - Get leverage brackets
 - `get_force_orders` - Get liquidation orders
 - `get_position_margin_history` - Get margin change history
 
-#### Order Management (10 tools)
+### Order Management
+*(14 tools)*
+
 - `place_order` - Place a futures order
 - `place_multiple_orders` - Place multiple orders in batch
 - `cancel_order` - Cancel an active order
 - `cancel_multiple_orders` - Cancel multiple orders
 - `cancel_all_orders` - Cancel all open orders for a symbol
-- `auto_cancel_all_orders` - Set up auto-cancellation
-- `get_open_order` - Query specific open order
+- `get_order` - Get order details
 - `get_open_orders` - Get all open orders
-- `get_all_orders` - Get all orders (filled, canceled, rejected)
+- `get_all_orders` - Get order history
+- `auto_cancel_orders` - Set auto-cancel for orders
 - `query_order` - Query order status
 
-#### Trading Configuration (4 tools)
-- `change_leverage` - Change initial leverage
-- `change_margin_type` - Change margin type (ISOLATED/CROSSED)
-- `change_position_mode` - Change position mode
-- `modify_position_margin` - Modify position margin
+### Market Data
+*(6 tools)*
 
-#### Market Data (10 tools)
-- `get_exchange_info` - Get trading rules and symbol info
-- `get_book_ticker` - Get best bid/ask prices
-- `get_price_ticker` - Get latest prices
-- `get_24hr_ticker` - Get 24hr price change statistics
-- `get_taker_buy_sell_volume` - Get taker buy/sell volume ratio
+- `get_exchange_info` - Get exchange trading rules and symbol information
 - `get_order_book` - Get order book depth
-- `get_klines` - Get candlestick data
-- `get_mark_price` - Get mark price and funding rate
-- `get_aggregate_trades` - Get aggregate trade data
-- `get_funding_rate_history` - Get funding rate history
+- `get_klines` - Get candlestick/kline data
+- `get_24hr_ticker` - Get 24hr ticker price change statistics
+- `get_price_ticker` - Get symbol price ticker
+- `get_taker_buy_sell_volume` - Get taker buy/sell volume ratio
 
-#### Trading History (2 tools)
+### Risk Management
+*(4 tools)*
+
+- `get_open_interest` - Get open interest statistics
+- `get_adl_quantile` - Get ADL quantile estimation
+- `get_leverage_brackets` - Get leverage brackets
+- `get_force_orders` - Get liquidation orders
+
+### Trading History
+*(7 tools)*
+
 - `get_account_trades` - Get account trade history
 - `get_income_history` - Get income history
+- `get_recent_trades` - Get recent trades list
+- `get_agg_trades` - Get compressed/aggregate trades list
+- `get_mark_price` - Get mark price and funding rate
+- `get_funding_rate_history` - Get funding rate history
+- `get_book_ticker` - Get symbol order book ticker
 
-## Example Usage
+## 💡 Example Usage
 
 ### Place a Market Order
 
@@ -320,52 +290,54 @@ The server provides 35 tools organized into categories:
 }
 ```
 
-## Security
+## 🔒 Security
 
 ### API Key Security
-Your Binance API key and secret remain **local to your computer**. The MCP server runs entirely on your machine; neither the package author nor any third-party remote service can read your credentials.
 
-Key points:
-- Store credentials in environment variables (recommended) or a local `mcp-config.json`. These values are never transmitted unless *you* publish them.
-- Never commit credentials to version control or share screenshots/logs that contain them.
-- Use API keys with minimal required permissions and, where possible, IP-whitelist them.
-- Consider using Binance Testnet for development.
+**🔐 Your Binance API key and secret remain completely local to your computer.** The MCP server runs entirely on your machine; neither the package author nor any third-party remote service can access your credentials.
 
-How it works:
-1. Your editor/terminal launches the MCP server with a local command such as:
+#### Key Security Points:
+- ✅ Store credentials in environment variables (recommended) or local config files
+- ✅ Keys are never transmitted unless *you* publish them
+- ❌ Never commit credentials to version control
+- ❌ Never share screenshots/logs containing credentials
+- ✅ Use API keys with minimal required permissions
+- ✅ IP-whitelist your keys when possible
+- ✅ Consider using Binance Testnet for development
+
+#### How It Works:
+1. **Local Launch**: Your editor/terminal launches the MCP server locally:
    ```bash
    uvx binance_futures_mcp --binance-api-key $BINANCE_API_KEY --binance-secret-key $BINANCE_SECRET_KEY
    ```
-2. The keys live only:
-   • in your environment variables or local config file
-   • on the command line/process table of **your** computer
-   • in the MCP process memory while it makes HTTPS calls directly to Binance.
-3. The package contains **no** telemetry or analytics code that could exfiltrate your credentials.
 
-Follow the guidelines above to keep your keys private and secure.
+2. **Keys Stay Local**: Your credentials exist only:
+   - In your environment variables or local config file
+   - On your computer's command line/process table
+   - In MCP process memory during HTTPS calls to Binance
 
-### Rate Limiting
-The server respects Binance's rate limits:
-- Weight-based limits for different endpoints
-- Order placement rate limits
-- Automatic signature generation for authenticated requests
+3. **No Telemetry**: The package contains **zero** telemetry or analytics code
 
-### Error Handling
-- Comprehensive error handling for API failures
-- Clear error messages for common issues
-- Validation of required parameters
+### Rate Limiting & Error Handling
 
-## API Reference
+- ⚡ Respects Binance's weight-based rate limits
+- 🔄 Automatic order placement rate limiting
+- 🔐 Automatic HMAC SHA256 signature generation
+- 🛡️ Comprehensive error handling with clear messages
+- ✅ Parameter validation before API calls
+
+## 📚 API Reference
 
 This server implements all endpoints documented in the Binance Futures API:
 
 - **Base URL**: `https://fapi.binance.com`
 - **API Type**: Binance USD-S Margined Futures
 - **Authentication**: API Key + HMAC SHA256 Signature
+- **Rate Limits**: Respected automatically
 
 For detailed parameter specifications, see the [Binance Futures API Documentation](https://binance-docs.github.io/apidocs/futures/en/).
 
-## Development
+## 🔧 Development
 
 ### Project Structure
 
@@ -393,15 +365,22 @@ black src/
 ruff check src/
 ```
 
-## Error Codes
+## ❗ Error Codes
 
-Common Binance API error codes:
-- `-1121`: Invalid symbol
-- `-2019`: Margin is insufficient  
-- `-1116`: Invalid orderType
-- `-1013`: Filter failure (PRICE_FILTER, LOT_SIZE, etc.)
+Common Binance API error codes you might encounter:
 
-## Contributing
+| Code | Description |
+|------|-------------|
+| `-1121` | Invalid symbol |
+| `-2019` | Margin is insufficient |
+| `-1116` | Invalid orderType |
+| `-1013` | Filter failure (PRICE_FILTER, LOT_SIZE, etc.) |
+| `-1102` | Mandatory parameter was not sent |
+| `-1003` | Too many requests (rate limit exceeded) |
+
+For a complete list, see the [Binance API Error Codes](https://binance-docs.github.io/apidocs/futures/en/#error-codes).
+
+## 🤝 Contributing
 
 1. Fork the repository
 2. Create a feature branch
@@ -409,15 +388,15 @@ Common Binance API error codes:
 4. Add tests if applicable
 5. Submit a pull request
 
-## License
+## 📄 License
 
 MIT License - see LICENSE file for details.
 
-## Disclaimer
+## ⚠️ Disclaimer
 
-This software is for educational and development purposes. Trading cryptocurrencies involves substantial risk. Use at your own risk and never trade with money you cannot afford to lose.
+**⚠️ IMPORTANT**: This software is for educational and development purposes. Trading cryptocurrencies involves substantial risk. Use at your own risk and never trade with money you cannot afford to lose.
 
-## Support
+## 💬 Support
 
 For issues and questions:
 - Check the [Binance API Documentation](https://binance-docs.github.io/apidocs/futures/en/)
