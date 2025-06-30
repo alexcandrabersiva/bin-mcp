@@ -349,6 +349,8 @@ The server provides **41 comprehensive tools** organized into the following cate
 - ✅ IP-whitelist your keys when possible
 - ✅ Consider using Binance Testnet for development
 
+
+
 #### How It Works:
 1. **Local Launch**: Your editor/terminal launches the MCP server locally:
    ```bash
