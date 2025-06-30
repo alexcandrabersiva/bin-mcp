@@ -7,9 +7,9 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="binance_futures_mcp",
-    version="1.0.7",
+    version="1.1.3",
     author="Binance MCP Server",
-    description="A Model Context Protocol server for Binance Futures API",
+    description="A Model Context Protocol server for Binance Futures API with comprehensive trading tools including TP/SL management",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/alexcandrabersiva/bin-mcp",
