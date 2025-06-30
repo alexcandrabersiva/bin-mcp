@@ -41,7 +41,7 @@ A Model Context Protocol (MCP) server that provides comprehensive access to Bina
 
 ## ✨ Features
 
-* **41 comprehensive trading tools** across 5 categories
+* **41 comprehensive trading tools** across 8 categories
 * **Smart ticker data caching** with 5-minute refresh cycle
 * **Proper authentication handling** (rejects unauthenticated requests)
 * **Active symbol filtering** (excludes delisted tokens)
@@ -198,65 +198,78 @@ Add to your Claude Desktop configuration file:
 
 The server provides **41 comprehensive tools** organized into the following categories:
 
-### Account & Position Management
-*(14 tools)*
+### Account Information
+*(5 tools)*
 
 - `get_account_info` - Get account information
 - `get_balance` - Get account balance
-- `get_positions` - Get position information
+- `get_position_info` - Get position information
 - `get_position_mode` - Get position mode (hedge/one-way)
-- `change_position_mode` - Switch between hedge and one-way modes
 - `get_commission_rate` - Get commission rates
-- `change_leverage` - Change leverage for a symbol
-- `change_margin_type` - Change margin type (isolated/cross)
-- `modify_position_margin` - Modify position margin
+
+### Risk Management
+*(4 tools)*
+
 - `get_adl_quantile` - Get ADL quantile estimation
 - `get_leverage_brackets` - Get leverage brackets
 - `get_force_orders` - Get liquidation orders
 - `get_position_margin_history` - Get margin change history
 
 ### Order Management
-*(14 tools)*
+*(6 tools)*
 
 - `place_order` - Place a futures order
 - `place_multiple_orders` - Place multiple orders in batch
 - `cancel_order` - Cancel an active order
 - `cancel_multiple_orders` - Cancel multiple orders
 - `cancel_all_orders` - Cancel all open orders for a symbol
-- `get_order` - Get order details
-- `get_open_orders` - Get all open orders
-- `get_all_orders` - Get order history
-- `auto_cancel_orders` - Set auto-cancel for orders
-- `query_order` - Query order status
+- `auto_cancel_all_orders` - Set a timer to cancel all orders
 
-### Market Data
-*(6 tools)*
-
-- `get_exchange_info` - Get exchange trading rules and symbol information
-- `get_order_book` - Get order book depth
-- `get_klines` - Get candlestick/kline data
-- `get_24hr_ticker` - Get 24hr ticker price change statistics
-- `get_price_ticker` - Get symbol price ticker
-- `get_taker_buy_sell_volume` - Get taker buy/sell volume ratio
-
-### Risk Management
+### Order Query
 *(4 tools)*
 
-- `get_open_interest` - Get open interest statistics
-- `get_adl_quantile` - Get ADL quantile estimation
-- `get_leverage_brackets` - Get leverage brackets
-- `get_force_orders` - Get liquidation orders
+- `get_open_order` - Query current open order by order id
+- `get_open_orders` - Get all open orders for a symbol
+- `get_all_orders` - Get all orders (open, filled, cancelled)
+- `query_order` - Query a specific order's status
+
+### Position Management
+*(4 tools)*
+
+- `close_position` - Close a position (market order)
+- `modify_order` - Modify an existing order
+- `add_tp_sl_to_position` - Add TP/SL to position
+- `place_bracket_order` - Place an order with TP/SL
+
+### Trading Configuration
+*(4 tools)*
+
+- `change_leverage` - Change leverage for a symbol
+- `change_margin_type` - Change margin type (isolated/cross)
+- `change_position_mode` - Switch between hedge and one-way modes
+- `modify_position_margin` - Modify position margin
+
+### Market Data
+*(12 tools)*
+
+- `get_exchange_info` - Get exchange trading rules
+- `get_book_ticker` - Get best price/qty on the order book
+- `get_price_ticker` - Get latest price for a symbol
+- `get_24hr_ticker` - Get 24hr price change statistics
+- `get_top_gainers_losers` - Get top gainers and losers
+- `get_market_overview` - Get overall market statistics
+- `get_order_book` - Get order book depth
+- `get_klines` - Get candlestick data
+- `get_mark_price` - Get mark price and funding rate
+- `get_aggregate_trades` - Get compressed/aggregate trades list
+- `get_funding_rate_history` - Get funding rate history
+- `get_taker_buy_sell_volume` - Get taker buy/sell volume ratio
 
 ### Trading History
-*(7 tools)*
+*(2 tools)*
 
 - `get_account_trades` - Get account trade history
 - `get_income_history` - Get income history
-- `get_recent_trades` - Get recent trades list
-- `get_agg_trades` - Get compressed/aggregate trades list
-- `get_mark_price` - Get mark price and funding rate
-- `get_funding_rate_history` - Get funding rate history
-- `get_book_ticker` - Get symbol order book ticker
 
 ## 💡 Example Usage
 
