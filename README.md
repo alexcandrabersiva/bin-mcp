@@ -389,12 +389,28 @@ For detailed parameter specifications, see the [Binance Futures API Documentatio
 binance-mcp-server/
 ├── src/
 │   └── binance_mcp/
-│       ├── __init__.py
-│       ├── __main__.py
-│       └── server.py
-├── pyproject.toml
-└── README.md
+│       ├── __init__.py          # Package initialization
+│       ├── __main__.py          # CLI entry point
+│       ├── server.py            # Main MCP server implementation
+│       ├── client.py            # Binance API client
+│       ├── handlers.py          # Tool execution handlers
+│       ├── tools.py             # Tool definitions (41 trading tools)
+│       ├── cache.py             # Smart ticker data caching
+│       └── config.py            # Configuration management
+├── Dockerfile                   # Docker containerization
+├── .dockerignore               # Docker build optimization
+├── pyproject.toml              # Project configuration
+├── mcp-config.json             # MCP client configuration example
+└── README.md                   # Documentation
 ```
+
+#### Architecture Overview
+
+- **Modular Design**: Separated concerns across multiple components
+- **Smart Caching**: 5-minute ticker cache with background refresh
+- **Authentication**: Secure API key handling with environment variables
+- **Error Handling**: Graceful degradation and comprehensive error management
+- **Active Symbol Filtering**: Excludes delisted tokens automatically
 
 ### Running Tests
 
