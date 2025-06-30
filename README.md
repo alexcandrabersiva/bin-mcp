@@ -323,10 +323,26 @@ The server provides 35 tools organized into categories:
 ## Security
 
 ### API Key Security
-- Store API credentials securely using environment variables
-- Never commit credentials to version control
-- Use API keys with minimal required permissions
-- Consider using testnet for development
+Your Binance API key and secret remain **local to your computer**. The MCP server runs entirely on your machine; neither the package author nor any third-party remote service can read your credentials.
+
+Key points:
+- Store credentials in environment variables (recommended) or a local `mcp-config.json`. These values are never transmitted unless *you* publish them.
+- Never commit credentials to version control or share screenshots/logs that contain them.
+- Use API keys with minimal required permissions and, where possible, IP-whitelist them.
+- Consider using Binance Testnet for development.
+
+How it works:
+1. Your editor/terminal launches the MCP server with a local command such as:
+   ```bash
+   uvx binance_futures_mcp --binance-api-key $BINANCE_API_KEY --binance-secret-key $BINANCE_SECRET_KEY
+   ```
+2. The keys live only:
+   • in your environment variables or local config file
+   • on the command line/process table of **your** computer
+   • in the MCP process memory while it makes HTTPS calls directly to Binance.
+3. The package contains **no** telemetry or analytics code that could exfiltrate your credentials.
+
+Follow the guidelines above to keep your keys private and secure.
 
 ### Rate Limiting
 The server respects Binance's rate limits:
