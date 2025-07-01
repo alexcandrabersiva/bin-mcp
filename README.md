@@ -39,7 +39,7 @@ A Model Context Protocol (MCP) server that provides comprehensive access to Bina
 
 ## ✨ Features
 
-* **18 essential trading tools** across 2 categories (Account Information and Market Data)
+* **17 essential trading tools** across 2 categories (Account Information and Market Data)
 * **Smart ticker data caching** with 5-minute refresh cycle
 * **Proper authentication handling** (rejects unauthenticated requests)
 * **Active symbol filtering** (excludes delisted tokens)
