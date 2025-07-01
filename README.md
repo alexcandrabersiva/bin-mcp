@@ -43,8 +43,6 @@ A Model Context Protocol (MCP) server that provides comprehensive access to Bina
 * **Proper authentication handling** (rejects unauthenticated requests)
 * **Error handling and graceful degradation**
 * **Real-time market data access**
-* **Complete order management suite**
-* **Risk management tools**
 
 ## 📦 Installation
 
