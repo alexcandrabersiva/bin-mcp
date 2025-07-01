@@ -11,10 +11,8 @@ A Model Context Protocol (MCP) server that provides comprehensive access to Bina
   - [API Requirements](#api-requirements)
   - [MCP Client Setup](#mcp-client-setup)
 - [🛠️ Available Tools](#️-available-tools)
-  - [Account & Position Management](#account--position-management)
-  - [Order Management](#order-management)
+  - [Account Information](#account-information)
   - [Market Data](#market-data)
-  - [Trading History](#trading-history)
 - [💡 Example Usage](#-example-usage)
 - [🔒 Security](#-security)
 - [📚 API Reference](#-api-reference)
@@ -41,7 +39,7 @@ A Model Context Protocol (MCP) server that provides comprehensive access to Bina
 
 ## ✨ Features
 
-* **41 comprehensive trading tools** across 8 categories
+* **18 essential trading tools** across 2 categories (Account Information and Market Data)
 * **Smart ticker data caching** with 5-minute refresh cycle
 * **Proper authentication handling** (rejects unauthenticated requests)
 * **Active symbol filtering** (excludes delisted tokens)
@@ -204,50 +202,8 @@ The server provides **41 comprehensive tools** organized into the following cate
 - `get_account_info` - Get account information
 - `get_balance` - Get account balance
 - `get_position_info` - Get position information
-- `get_position_mode` - Get position mode (hedge/one-way)
-- `get_commission_rate` - Get commission rates
-
-### Risk Management
-*(4 tools)*
-
-- `get_adl_quantile` - Get ADL quantile estimation
-- `get_leverage_brackets` - Get leverage brackets
-- `get_force_orders` - Get liquidation orders
-- `get_position_margin_history` - Get margin change history
-
-### Order Management
-*(6 tools)*
-
-- `place_order` - Place a futures order
-- `place_multiple_orders` - Place multiple orders in batch
-- `cancel_order` - Cancel an active order
-- `cancel_multiple_orders` - Cancel multiple orders
-- `cancel_all_orders` - Cancel all open orders for a symbol
-- `auto_cancel_all_orders` - Set a timer to cancel all orders
-
-### Order Query
-*(4 tools)*
-
-- `get_open_order` - Query current open order by order id
-- `get_open_orders` - Get all open orders for a symbol
-- `get_all_orders` - Get all orders (open, filled, cancelled)
-- `query_order` - Query a specific order's status
-
-### Position Management
-*(4 tools)*
-
-- `close_position` - Close a position (market order)
-- `modify_order` - Modify an existing order
-- `add_tp_sl_to_position` - Add TP/SL to position
-- `place_bracket_order` - Place an order with TP/SL
-
-### Trading Configuration
-*(4 tools)*
-
-- `change_leverage` - Change leverage for a symbol
-- `change_margin_type` - Change margin type (isolated/cross)
-- `change_position_mode` - Switch between hedge and one-way modes
-- `modify_position_margin` - Modify position margin
+- `get_position_mode` - Get position mode (Hedge vs. One-way)
+- `get_commission_rate` - Get commission rate
 
 ### Market Data
 *(12 tools)*

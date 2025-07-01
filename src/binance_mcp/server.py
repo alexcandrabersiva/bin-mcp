@@ -155,7 +155,7 @@ async def main():
     args = parser.parse_args()
     
     # Initialize server with credentials
-    server_instance = BinanceMCPServer(args.binance_api_key, args.binance_secret_key, args.member_key)
+    server_instance = BinanceMCPServer(args.binance_api_key, args.binance_secret_key)
     
     # Run server using stdio
     async with stdio_server() as (read_stream, write_stream):
