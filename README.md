@@ -194,7 +194,7 @@ Add to your Claude Desktop configuration file:
 
 ## 🛠️ Available Tools
 
-The server provides **41 comprehensive tools** organized into the following categories:
+The server provides **17 essential tools** organized into the following categories:
 
 ### Account Information
 *(5 tools)*
@@ -220,12 +220,6 @@ The server provides **41 comprehensive tools** organized into the following cate
 - `get_aggregate_trades` - Get compressed/aggregate trades list
 - `get_funding_rate_history` - Get funding rate history
 - `get_taker_buy_sell_volume` - Get taker buy/sell volume ratio
-
-### Trading History
-*(2 tools)*
-
-- `get_account_trades` - Get account trade history
-- `get_income_history` - Get income history
 
 ## 💡 Example Usage
 
@@ -365,7 +359,7 @@ binance-mcp-server/
 │       ├── server.py            # Main MCP server implementation
 │       ├── client.py            # Binance API client
 │       ├── handlers.py          # Tool execution handlers
-│       ├── tools.py             # Tool definitions (41 trading tools)
+│       ├── tools.py             # Tool definitions (17 trading tools)
 │       ├── cache.py             # Smart ticker data caching
 │       └── config.py            # Configuration management
 ├── Dockerfile                   # Docker containerization
