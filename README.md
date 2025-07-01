@@ -41,7 +41,6 @@ A Model Context Protocol (MCP) server that provides comprehensive access to Bina
 
 * **11 essential trading tools** across 2 categories (Account Information and Market Data)
 * **Proper authentication handling** (rejects unauthenticated requests)
-* **Active symbol filtering** (excludes delisted tokens)
 * **Error handling and graceful degradation**
 * **Real-time market data access**
 * **Complete order management suite**
@@ -193,7 +192,7 @@ Add to your Claude Desktop configuration file:
 
 ## 🛠️ Available Tools
 
-The server provides **17 essential tools** organized into the following categories:
+The server provides **11 essential tools** organized into the following categories:
 
 ### Account Information
 *(5 tools)*
@@ -205,7 +204,7 @@ The server provides **17 essential tools** organized into the following categori
 - `get_commission_rate` - Get commission rate
 
 ### Market Data
-*(12 tools)*
+*(6 tools)*
 
 - `get_exchange_info` - Get exchange trading rules
 - `get_book_ticker` - Get best price/qty on the order book
@@ -213,7 +212,6 @@ The server provides **17 essential tools** organized into the following categori
 - `get_order_book` - Get order book depth
 - `get_klines` - Get candlestick data
 - `get_mark_price` - Get mark price and funding rate
-- `get_taker_buy_sell_volume` - Get taker buy/sell volume ratio
 
 ## 💡 Example Usage
 

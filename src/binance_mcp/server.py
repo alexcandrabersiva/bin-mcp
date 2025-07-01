@@ -101,7 +101,7 @@ async def main():
             write_stream, 
             InitializationOptions(
                 server_name="binance-futures-mcp-server",
-                server_version="1.1.3",
+                server_version="1.2.1",
                 capabilities={
                     "tools": {}
                 }
