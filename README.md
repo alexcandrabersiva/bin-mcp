@@ -39,8 +39,7 @@ A Model Context Protocol (MCP) server that provides comprehensive access to Bina
 
 ## ✨ Features
 
-* **17 essential trading tools** across 2 categories (Account Information and Market Data)
-* **Smart ticker data caching** with 5-minute refresh cycle
+* **11 essential trading tools** across 2 categories (Account Information and Market Data)
 * **Proper authentication handling** (rejects unauthenticated requests)
 * **Active symbol filtering** (excludes delisted tokens)
 * **Error handling and graceful degradation**
@@ -211,14 +210,9 @@ The server provides **17 essential tools** organized into the following categori
 - `get_exchange_info` - Get exchange trading rules
 - `get_book_ticker` - Get best price/qty on the order book
 - `get_price_ticker` - Get latest price for a symbol
-- `get_24hr_ticker` - Get 24hr price change statistics
-- `get_top_gainers_losers` - Get top gainers and losers
-- `get_market_overview` - Get overall market statistics
 - `get_order_book` - Get order book depth
 - `get_klines` - Get candlestick data
 - `get_mark_price` - Get mark price and funding rate
-- `get_aggregate_trades` - Get compressed/aggregate trades list
-- `get_funding_rate_history` - Get funding rate history
 - `get_taker_buy_sell_volume` - Get taker buy/sell volume ratio
 
 ## 💡 Example Usage
@@ -359,8 +353,7 @@ binance-mcp-server/
 │       ├── server.py            # Main MCP server implementation
 │       ├── client.py            # Binance API client
 │       ├── handlers.py          # Tool execution handlers
-│       ├── tools.py             # Tool definitions (17 trading tools)
-│       ├── cache.py             # Smart ticker data caching
+│       ├── tools.py             # Tool definitions (11 trading tools)
 │       └── config.py            # Configuration management
 ├── Dockerfile                   # Docker containerization
 ├── .dockerignore               # Docker build optimization
@@ -372,10 +365,8 @@ binance-mcp-server/
 #### Architecture Overview
 
 - **Modular Design**: Separated concerns across multiple components
-- **Smart Caching**: 5-minute ticker cache with background refresh
 - **Authentication**: Secure API key handling with environment variables
 - **Error Handling**: Graceful degradation and comprehensive error management
-- **Active Symbol Filtering**: Excludes delisted tokens automatically
 
 ### Running Tests
 

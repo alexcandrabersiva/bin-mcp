@@ -112,42 +112,6 @@ def get_market_data_tools():
             }
         ),
         Tool(
-            name="get_24hr_ticker",
-            description="Get 24hr ticker price change statistics",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "symbol": {"type": "string", "description": "Trading pair symbol (optional, if not provided returns all symbols)"}
-                },
-                "required": []
-            }
-        ),
-        Tool(
-            name="get_top_gainers_losers",
-            description="Get top gainers and losers from cached 24hr ticker data (much faster than fetching individual symbols)",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "type": {"type": "string", "description": "Type to get: 'gainers', 'losers', or 'both' (default: 'both')"},
-                    "limit": {"type": "integer", "description": "Number of top results to return (default: 10, max: 200)"},
-                    "min_volume": {"type": "number", "description": "Minimum 24hr volume filter (optional)"}
-                },
-                "required": []
-            }
-        ),
-        Tool(
-            name="get_market_overview",
-            description="Get overall market statistics and top movers from cached data",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "include_top_movers": {"type": "boolean", "description": "Include top 5 gainers and losers (default: true)"},
-                    "volume_threshold": {"type": "number", "description": "Minimum volume for market overview calculations (optional)"}
-                },
-                "required": []
-            }
-        ),
-        Tool(
             name="get_order_book",
             description="Get order book for a symbol",
             inputSchema={
@@ -183,50 +147,6 @@ def get_market_data_tools():
                     "symbol": {"type": "string", "description": "Trading pair symbol"}
                 },
                 "required": []
-            }
-        ),
-        Tool(
-            name="get_aggregate_trades",
-            description="Get compressed, aggregate market trades",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "symbol": {"type": "string", "description": "Trading pair symbol"},
-                    "from_id": {"type": "integer", "description": "ID to get trades from"},
-                    "start_time": {"type": "integer", "description": "Start timestamp in ms"},
-                    "end_time": {"type": "integer", "description": "End timestamp in ms"},
-                    "limit": {"type": "integer", "description": "Number of trades (max 1000)"}
-                },
-                "required": ["symbol"]
-            }
-        ),
-        Tool(
-            name="get_funding_rate_history",
-            description="Get funding rate history for a symbol",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "symbol": {"type": "string", "description": "Trading pair symbol"},
-                    "start_time": {"type": "integer", "description": "Start timestamp in ms"},
-                    "end_time": {"type": "integer", "description": "End timestamp in ms"},
-                    "limit": {"type": "integer", "description": "Number of entries (max 1000)"}
-                },
-                "required": []
-            }
-        ),
-        Tool(
-            name="get_taker_buy_sell_volume",
-            description="Get taker buy/sell volume ratio statistics",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "symbol": {"type": "string", "description": "Trading pair symbol"},
-                    "period": {"type": "string", "description": "Period for the data (5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d)"},
-                    "start_time": {"type": "integer", "description": "Start timestamp in ms"},
-                    "end_time": {"type": "integer", "description": "End timestamp in ms"},
-                    "limit": {"type": "integer", "description": "Number of entries (max 500, default 30)"}
-                },
-                "required": ["symbol", "period"]
             }
         ),
     ]

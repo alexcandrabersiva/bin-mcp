@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "binance_futures_mcp"
-version = "1.1.4"
+version = "1.2.0"
 description = "A Model Context Protocol server for Binance Futures API with comprehensive trading tools including TP/SL management"
 authors = [
     {name = "Binance MCP Server"}
